@@ -1,8 +1,7 @@
 #:kivy 1.0.9   
 
-<Game>:
-    size: 600, 800 
-    player: player
+<GateGuardianPlayer>:
+    size: 80, 100
     canvas.before: 
         Line:
             width: 6
@@ -10,4 +9,14 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'images/background.png'
+            source: 'background.png'
+        
+            
+
+<Game>:
+    player: player
+    
+    GateGuardianPlayer:
+        id: player
+        center: self.parent.center
+    

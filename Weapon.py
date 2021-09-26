@@ -1,49 +1,5 @@
 import pygame
 
-class GateGuardianPlayer(Widget):
-    score = NumericProperty(0)
-    life = NumericProperty(30)
-    kills = NumericProperty(0)
-    MAX_SPEED = 7
-    velocity = [0, 0]
-    spriteCount = 1
-    duration = 20
-    counter = 0
-
-    def move(self, velocity):
-        polX = self.right
-        polY = self.top
-        if polX < 800 and polX > 0:
-            self.center_x += velocity[0]
-        if polY < 600 and polY > 0:
-            self.center_y += velocity[1]
-        if polX > 800:
-            self.center_x = 800 - self.width / 1.5 + 3
-        if (polX - self.width) < 0:
-            self.center_x = self.width / 1.5 - 3
-        if polY > 600:
-            self.center_y = 600 - self.height / 1.5 + 3
-        if polY - self.height < 0:
-            self.center_y = self.height / 1.5 - 3
-        
-        if velocity[0] > 0: dir = "right"
-        else : dir = "left" 
-        source = "atlas://npc/move" + dir + str(self.spriteCount)
-        self.counter += 1
-        if(self.counter > self.duration):
-            self.canvas.clear()
-            self.spriteCount = self.spriteCount % 2 + 1
-            with self.canvas:
-                Rectangle(pos=self.pos, size=self.size, source=source)
-            self.counter = 0
-
-        self.canvas.clear()
-        with self.canvas:
-            Rectangle(pos=self.pos, size=self.size, source=source)
-
-    def shoot(self, dir):
-        pass
-
 
 class GateGuardianMonster(Widget):
     spriteCount = 1
