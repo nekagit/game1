@@ -1,8 +1,11 @@
-from vector import Vector
+from engine.vector import Vector
 import math
 
-
 class Particle:
+
+    '''
+        Arguements: position, velocity, acceleration, damping, inverseMass
+    '''
 
     position: Vector
     velocity: Vector
@@ -32,7 +35,7 @@ class Particle:
         elif len(args) == 1:
             self.position = args[0]
         else:
-            raise Exception('Invalid vector')
+            raise Exception('Invalid vector: Contains ' + str(len(args)) + " arguments!")
 
     def integrate(self, duration: float):
 

@@ -1,7 +1,9 @@
 import math
 
-
 class Vector:
+    '''
+        Vector class, takes in two arguments x and y
+    '''
 
     x: float
     y: float
