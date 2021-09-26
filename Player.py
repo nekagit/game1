@@ -5,4 +5,8 @@ from kivy.graphics import Rectangle, Color
 from engine.vector import Vector
 
 class Player(Widget):
-    pass
+
+    def init(self):
+        pos = Vector(0,0)
+        self.player = Particle(*pos)
+        pass
