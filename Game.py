@@ -1,4 +1,18 @@
-import pygame
+from kivy.properties import NumericProperty, ReferenceListProperty,\
+    ObjectProperty
+from kivy.properties import ObjectProperty, NumericProperty, ListProperty
+from kivy.app import App
+from kivy.atlas import Atlas
+from kivy.uix.widget import Widget
+from kivy.vector import Vector
+from kivy.clock import Clock
+from kivy.core.window import Window
+import random
+from kivy.uix.widget import Widget
+from kivy.uix.anchorlayout import AnchorLayout
+from kivy.graphics import Color, Rectangle
+from kivy.core.window import Window
+
 
 class GateGuardianPlayer(Widget):
     score = NumericProperty(0)
@@ -44,65 +58,8 @@ class GateGuardianPlayer(Widget):
     def shoot(self, dir):
         pass
 
-
-class GateGuardianMonster(Widget):
-    spriteCount = 1
-    duration = 20
-    counter = 0
-
-    def move(self, player):
-        self.velocity = (Vector(*player.pos) - self.pos) / \
-            Vector(*player.pos).distance(self.pos) * 2
-        if (not self.collide_widget(player)):
-            self.pos = Vector(*self.velocity) + self.pos
-        else:
-            self.pos = (0, self.center_y)
-            player.life -= 1
-        
-        if self.velocity[0] > 0: dir = "up"
-        else : dir = "down" 
-        source = "atlas://enemy/move" + dir + str(self.spriteCount)
-        self.counter += 1
-        if(self.counter > self.duration):
-            self.canvas.clear()
-            self.spriteCount = self.spriteCount % 2 + 1
-            with self.canvas:
-                Rectangle(pos=self.pos, size=self.size, source=source)
-            self.counter = 0
-
-        self.canvas.clear()
-        with self.canvas:
-            Rectangle(pos=self.pos, size=self.size, source=source)
-
-
-class GateGuardianTree(Widget):
-    pass
-
-
-class GateGuardianGame(Widget):
+class Game(Widget):
     player = ObjectProperty(None)
-    monsters = ListProperty([])
-    trees = ListProperty([])
-    score = ObjectProperty(None)
-
-    def add_monster(self, *args):
-        monsteri = GateGuardianMonster()
-        monsteri.pos = (random.randint(0, 1000), random.randint(0, 1000))
-        with monsteri.canvas:
-            Color(random.uniform(0.5, 1.0), random.uniform(
-                0.5, 1.0), random.uniform(0.5, 1.0))
-        self.add_widget(monsteri)
-        self.monsters.append(monsteri)
-
-    def add_tree(self):
-        tree = GateGuardianTree()
-        tree.pos = (random.randint(0, self.width),
-                    random.randint(0, self.height))
-        with tree.canvas:
-            Color(random.uniform(0.5, 1.0), random.uniform(
-                0.5, 1.0), random.uniform(0.5, 1.0))
-        self.add_widget(tree)
-        self.trees.append(tree)
 
     def init(self):
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
@@ -120,9 +77,6 @@ class GateGuardianGame(Widget):
 
     def _on_keyboard_up(self, keyboard, keycode):
         self.pressed_keys.remove(keycode[1])
-
-    def reset(self):
-        self.player.pos = self.center
 
     def velocity(self):
         v = self.player.velocity
@@ -149,92 +103,25 @@ class GateGuardianGame(Widget):
 
     def update(self, dt):
         dir = self.velocity()
-
-        if self.player.life <= 0:
-            self.ids.score.text = "GAME OVER"
-            exit()
-        else:
-            for i in range(0, len(self.monsters), 1):
-                self.monsters[i].move(self.player)
-
-            self.player.move(dir)
+        self.player.move(dir)
     
     def on_touch_down(self, touch):
         print(touch.pos)
         self.player.shoot(touch.pos)
         return super().on_touch_down(touch)
 
+  
 
-class GateGuardianApp(App):
+class GameApp(App):
 
     def build(self):
-        game = GateGuardianGame()
+        game = Game()
         game.init()
         Clock.schedule_interval(game.update, 1.0 / 60.0)
-        self.new_enemy_event = Clock.schedule_interval(game.add_monster, 5)
+        #self.new_enemy_event = Clock.schedule_interval(game.add_monster, 5)
         return game
 
 
 if __name__ == '__main__':
-    GateGuardianApp().run()
+    GameApp().run()
 
-
-####################################################################
-
-pygame.init()
-screen = pygame.display.set_mode((400, 300))
-done = False
-
-while not done:
-        for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                        done = True
-        
-        pygame.display.flip()
-
-
-
-
-class GateGuardianPlayer(Widget):
-    score = NumericProperty(0)
-    life = NumericProperty(30)
-    kills = NumericProperty(0)
-    MAX_SPEED = 7
-    velocity = [0, 0]
-    spriteCount = 1
-    duration = 20
-    counter = 0
-
-    def move(self, velocity):
-        polX = self.right
-        polY = self.top
-        if polX < 800 and polX > 0:
-            self.center_x += velocity[0]
-        if polY < 600 and polY > 0:
-            self.center_y += velocity[1]
-        if polX > 800:
-            self.center_x = 800 - self.width / 1.5 + 3
-        if (polX - self.width) < 0:
-            self.center_x = self.width / 1.5 - 3
-        if polY > 600:
-            self.center_y = 600 - self.height / 1.5 + 3
-        if polY - self.height < 0:
-            self.center_y = self.height / 1.5 - 3
-        
-        if velocity[0] > 0: dir = "right"
-        else : dir = "left" 
-        source = "atlas://npc/move" + dir + str(self.spriteCount)
-        self.counter += 1
-        if(self.counter > self.duration):
-            self.canvas.clear()
-            self.spriteCount = self.spriteCount % 2 + 1
-            with self.canvas:
-                Rectangle(pos=self.pos, size=self.size, source=source)
-            self.counter = 0
-
-        self.canvas.clear()
-        with self.canvas:
-            Rectangle(pos=self.pos, size=self.size, source=source)
-
-    def shoot(self, dir):
-        pass
