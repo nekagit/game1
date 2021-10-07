@@ -2,7 +2,7 @@ from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.properties import NumericProperty, StringProperty
 
-class GateGuardianPlayer(Widget):
+class Player(Widget):
     score = NumericProperty(0)
     life = NumericProperty(30)
     kills = NumericProperty(0)
