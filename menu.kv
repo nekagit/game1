@@ -1,0 +1,23 @@
+#:kivy 1.0.9
+
+<Player>:
+    size: 60, 80
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: self.source
+
+<Game>:
+    player: player
+    canvas.before: 
+        Line:
+            width: 6
+            rectangle: self.x, self.y, self.width, self.height
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/map.jpg'
+    Player:
+        id: player
+        center: self.parent.center
