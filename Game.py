@@ -1,7 +1,7 @@
 from kivy.properties import ObjectProperty, ListProperty
 from kivy.uix.widget import Widget
 
-class GateGuardianGame(Widget):
+class Game(Widget):
     player = ObjectProperty(None)
     fireballs = ListProperty([])
 

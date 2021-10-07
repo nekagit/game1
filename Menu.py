@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.clock import Clock
-import Game
+from Game import Game
 
 class MenuApp(App):
 
