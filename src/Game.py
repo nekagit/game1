@@ -1,8 +1,7 @@
+from sys import platform
 from kivy.properties import ObjectProperty, ListProperty
 from kivy.uix.widget import Widget
 
-class Platform(Widget):
-    pass
 
 class Game(Widget):
     player = ObjectProperty(None)
@@ -13,5 +12,5 @@ class Game(Widget):
         self.player.init()
 
     def update(self, dt):
-        self.player.move(self)
+        self.player.move(self, self.platform)
         self.player.animate()

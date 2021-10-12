@@ -1,6 +1,8 @@
+from sys import platform
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.properties import NumericProperty, StringProperty
+
 
 class Player(Widget):
     score = NumericProperty(0)
@@ -54,13 +56,37 @@ class Player(Widget):
 
         return v
 
-    def move(self, wall):
+    def move(self, wall: Widget, object: Widget):
+        objects = [object, wall]
         velocity = self.direction()
-        if self.top + velocity[1] < wall.top and self.top - self.height + velocity[1] > 0:
+        if self.detectCollision(objects, "vertical"):
             self.top += velocity[1]
-        if self.right + velocity[0] < wall.right and self.right - self.width + velocity[0] > 0:
+        if self.detectCollision(objects, "horizontal"):
             self.right += velocity[0]
         self.velocity = velocity
+
+    def interpolated_collision(self, wid):
+        vel = self.direction()
+        if self.right + vel[0] < wid.x:
+            return False
+        if self.x - vel[0] > wid.right:
+            return False
+        if self.top + vel[1] < wid.y:
+            return False
+        if self.y - vel[1] > wid.top:
+            return False
+        return True
+
+    def detectCollision(self, objects, dir):
+        is_colliding = False
+        if dir == "vertical":
+            dir = 1
+        else:
+            dir = 0
+        for object in objects:
+            if self.interpolated_collision(object):
+                is_colliding = True
+        return not is_colliding
 
     def animate(self):
         dir = "right"

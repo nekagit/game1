@@ -6,10 +6,6 @@ from Player import Player
 from Platform import Platform
 
 
-class Platform(Widget):
-    pass
-
-
 class MenuApp(App):
 
     def build(self):
