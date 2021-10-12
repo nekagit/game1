@@ -11,11 +11,11 @@
 
 
 <Platform>:
+    size: 60, 80
     canvas.before:
-    Rectangle: 
-        size: 10, 200
-        pos: self.center
-        rgb: (0, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
 <Game>:
     player: player
@@ -27,7 +27,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'background.png'
+            source: 'img/background.png'
     Player:
         id: player
         center: self.parent.center
