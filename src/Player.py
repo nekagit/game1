@@ -35,6 +35,8 @@ class Player(Widget):
         v = self.velocity
         a = self.MAX_SPEED / 15
         for vel in self.pressed_keys:
+            if(vel == 'r'):
+                self.pos = [0, 0]
             if(vel == 'w'):
                 v[1] = a*25
             if(vel == 'a'):
@@ -57,23 +59,23 @@ class Player(Widget):
         return v
 
     def move(self, wall: Widget, object: Widget):
-        objects = [object, wall]
+        objects = [object]
         velocity = self.direction()
-        if self.detectCollision(objects, "vertical"):
+        if self.top + velocity[1] < wall.top and self.top - self.height + velocity[1] > 0 and self.detectCollision(objects, "vertical"):
             self.top += velocity[1]
-        if self.detectCollision(objects, "horizontal"):
+        if self.right + velocity[0] < wall.right and self.right - self.width + velocity[0] > 0 and self.detectCollision(objects, "horizontal"):
             self.right += velocity[0]
         self.velocity = velocity
 
-    def interpolated_collision(self, wid):
+    def interpolated_collision(self, wid: Widget):
         vel = self.direction()
-        if self.right + vel[0] < wid.x:
+        if self.right + 2*vel[0] < wid.x:
             return False
-        if self.x - vel[0] > wid.right:
+        if self.x - 2*vel[0] > wid.right:
             return False
-        if self.top + vel[1] < wid.y:
+        if self.top + 2*vel[1] < wid.y:
             return False
-        if self.y - vel[1] > wid.top:
+        if self.y - 2*vel[1] > wid.top:
             return False
         return True
 
