@@ -1,7 +1,14 @@
 from kivy.app import App
 from kivy.clock import Clock
+from kivy.uix.widget import Widget
 from Game import Game
 from Player import Player
+from Platform import Platform
+
+
+class Platform(Widget):
+    pass
+
 
 class MenuApp(App):
 
@@ -14,4 +21,3 @@ class MenuApp(App):
 
 if __name__ == '__main__':
     MenuApp().run()
-

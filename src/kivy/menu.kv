@@ -9,8 +9,17 @@
             size: self.size
             source: self.source
 
+
+<Platform>:
+    canvas.before:
+    Rectangle: 
+        size: 10, 200
+        pos: self.center
+        rgb: (0, 1, 1)
+
 <Game>:
     player: player
+    platform: platform
     canvas.before: 
         Line:
             width: 6
@@ -21,4 +30,7 @@
             source: 'background.png'
     Player:
         id: player
+        center: self.parent.center
+    Platform:
+        id: platform
         center: self.parent.center
