@@ -4,14 +4,10 @@ from kivy.properties import NumericProperty, StringProperty
 from typing import List
 from kivy.properties import ObjectProperty, ListProperty
 
-
 class LevelTempel(Widget):
     player = ObjectProperty(None)
     source = StringProperty("")
-    velocity = [0, 0]
-    counter = 0
-    spriteIndex = 1
-
+    
     def init(self):
         self.player.init()
 

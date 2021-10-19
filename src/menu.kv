@@ -1,6 +1,14 @@
 #:kivy 1.0.9
 
-<Level>:
+<Player>:
+    size: 60, 80
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: self.source
+
+<LevelTempel>:
     player: player
 
     canvas.before:
@@ -13,34 +21,11 @@
         id: player
 
 
-<Player>:
-    size: 60, 80
-    canvas.before:
-        Rectangle:
-            pos: self.pos
-            size: self.size
-            source: self.source
-
-
-<Platform>:
-    size: 1000, 10
-    pos: 100, 100
-    canvas.before:
-        Rectangle:
-            size: self.size
-
 <Game>:
     level: level
-    platform: platform
     canvas.before: 
-        Line:
-            width: 6
-            rectangle: self.x, self.y, self.width, self.height
         Rectangle:
             pos: self.pos
             size: self.size
-    Level:
+    LevelTempel:
         id: level
-
-    Platform:
-        id: platform
