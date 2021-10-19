@@ -60,7 +60,6 @@ class Player(Widget):
             if(vel == 'r'):
                 self.pos = [0, 0]
 
-
     def move(self, wall: Widget, object: Widget):
         objects = [object]
         velocity = self.direction()
@@ -70,15 +69,15 @@ class Player(Widget):
             self.right += velocity[0]
         self.velocity = velocity
 
-    def interpolated_collision(self, wid: Widget):
+    def interpolated_collision(self, wid: Widget, dir):
         vel = self.direction()
-        if self.right < wid.x:
+        if self.right + vel[dir] < wid.x:
             return False
-        if self.x > wid.right:
+        if self.x + vel[dir] > wid.right:
             return False
-        if self.top  < wid.y:
+        if self.top + vel[dir] < wid.y:
             return False
-        if self.y  > wid.top:
+        if self.y + vel[dir] > wid.top:
             return False
         return True
 
@@ -89,7 +88,7 @@ class Player(Widget):
         else:
             dir = 0
         for object in objects:
-            if self.interpolated_collision(object):
+            if self.interpolated_collision(object, dir):
                 is_colliding = True
         return not is_colliding
 
