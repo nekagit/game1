@@ -3,11 +3,15 @@ from kivy.core.window import Window
 from kivy.properties import NumericProperty, StringProperty
 from typing import List
 from kivy.properties import ObjectProperty, ListProperty
+from kivy.core.window import Window
+Window.size = (600, 500)
+size = Window.size
 
 class LevelTempel(Widget):
     player = ObjectProperty(None)
     source = StringProperty("")
-    
+    size3 = size
+
     def init(self):
         self.player.init()
 
