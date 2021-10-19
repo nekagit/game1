@@ -4,14 +4,10 @@ from kivy.uix.widget import Widget
 
 
 class Game(Widget):
-    player = ObjectProperty(None)
-    fireballs = ListProperty([])
-    platforms = ListProperty([])
+    level = ObjectProperty(None)
 
     def init(self):
-        self.player.init()
+        self.level.init()
 
-    def update(self, dt):
-        self.player.handleInput()
-        self.player.move(self, self.platform)
-        self.player.animate()
+    def update(self):
+        self.level.refresh()
