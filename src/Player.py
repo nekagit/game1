@@ -71,14 +71,20 @@ class Player(Widget):
 
     def interpolated_collision(self, wid: Widget, dir):
         vel = self.direction()
+        print(vel)
         if self.right + vel[dir] < wid.x:
+            print(1)
             return False
-        if self.x - vel[dir] > wid.right:
+        if self.x + vel[dir] > wid.right:
+            print(2)
             return False
-        if self.top + vel[dir] < wid.y:
+        if self.top - vel[dir] < wid.y:
+            print(3)
             return False
         if self.y + vel[dir] > wid.top:
+            print(4)
             return False
+        print(5)
         return True
 
     def detectCollision(self, objects, dir):
