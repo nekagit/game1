@@ -1,6 +1,5 @@
 from kivy.app import App
 from kivy.clock import Clock
-from kivy.uix.widget import Widget
 from Game import Game
 from Player import Player
 from Platform import Platform
