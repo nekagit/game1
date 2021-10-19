@@ -73,7 +73,7 @@ class Player(Widget):
         vel = self.direction()
         if self.right + vel[dir] < wid.x:
             return False
-        if self.x + vel[dir] > wid.right:
+        if self.x - vel[dir] > wid.right:
             return False
         if self.top + vel[dir] < wid.y:
             return False
