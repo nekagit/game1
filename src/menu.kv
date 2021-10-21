@@ -1,4 +1,11 @@
-#:kivy 1.0.9
+
+<Platform>:
+    size: 10, 10
+    pos: 300, 120
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
 <Player>:
     size: 60, 80
@@ -11,13 +18,17 @@
 
 <LevelTempel>:
     player: player
+    platform: platform
     canvas:
         Rectangle:
             size: self.size
             source: 'img/background.png'
 
     Player:
-        id: player
+        id: player  
+
+    Platform:
+        id: platform
 
 
 <Game>:

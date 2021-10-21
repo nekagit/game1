@@ -9,5 +9,5 @@ class Game(Widget):
     def init(self):
         self.level.init()
 
-    def update(self):
+    def update(self, dt):
         self.level.refresh()

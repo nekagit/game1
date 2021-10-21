@@ -4,13 +4,16 @@ from kivy.properties import NumericProperty, StringProperty
 from typing import List
 from kivy.properties import ObjectProperty, ListProperty
 from kivy.core.window import Window
+
+from Platform import Platform
 Window.size = (600, 500)
 size = Window.size
 
 class LevelTempel(Widget):
     player = ObjectProperty(None)
+    platform = ObjectProperty(None)
     source = StringProperty("")
-    size3 = size
+    size = size
 
     def init(self):
         self.player.init()

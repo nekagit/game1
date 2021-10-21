@@ -69,6 +69,17 @@ class Player(Widget):
             self.right += velocity[0]
         self.velocity = velocity
 
+    def detectCollision(self, objects, dir):
+        is_colliding = False
+        if dir == "vertical":
+            dir = 1
+        else:
+            dir = 0
+        for object in objects:
+            if self.interpolated_collision(object, dir):
+                is_colliding = True
+        return not is_colliding
+
     def interpolated_collision(self, wid: Widget, dir):
         vel = self.direction()
         if self.right + vel[dir] < wid.x:
@@ -80,17 +91,6 @@ class Player(Widget):
         if self.y + vel[dir] > wid.top:
             return False
         return True
-
-    def detectCollision(self, objects, dir):
-        is_colliding = False
-        if dir == "vertical":
-            dir = 1
-        else:
-            dir = 0
-        for object in objects:
-            if self.interpolated_collision(object, dir):
-                is_colliding = True
-        return not is_colliding
 
     def animate(self):
         dir = "right"
